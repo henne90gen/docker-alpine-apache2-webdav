@@ -1,4 +1,5 @@
-FROM alpine:3.9
+FROM alpine:3.12.7
+# version 3.13.x is missing apr-util-dbm_db
 
 ENV LANG en_US.utf8
 
@@ -11,24 +12,12 @@ RUN apk add --update \
         apr-util-dbm_db \
         linux-pam \
         && \
-    curl -Ls -o /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v1.21.7.0/s6-overlay-amd64.tar.gz \
+    curl -Ls -o /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-amd64.tar.gz \
     && tar xfz /tmp/s6-overlay.tar.gz -C / \
     && rm -f /tmp/s6-overlay.tar.gz \
     && deluser xfs \
     && delgroup www-data \
-    && apk add -U build-base \
-        linux-pam-dev \
-        tar \
-    && mkdir pam_pwdfile \
-        && cd pam_pwdfile \
-        && curl -sSL https://github.com/tiwe-de/libpam-pwdfile/archive/v1.0.tar.gz | tar xz --strip 1 \
-        && make install \
-        && cd .. \
-        && rm -rf pam_pwdfile \
-    && apk del build-base \
-        curl \
-        linux-pam-dev \
-        tar \
+    && apk del curl \
     && rm -rfv /var/cache/apk/*
 ADD files.tar /
 ENTRYPOINT ["/init"]

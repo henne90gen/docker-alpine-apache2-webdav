@@ -1,7 +1,7 @@
 version: '3'
 services:
   apache2:
-    image: henne90gen/alpine-apache2-webdav:0.1
+    image: henne90gen/alpine-apache2-webdav:0.2
     hostname: apache2
     environment:
       - APACHE_SERVER_NAME=localhost

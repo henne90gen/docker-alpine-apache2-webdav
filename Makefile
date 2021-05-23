@@ -1,4 +1,4 @@
-version=0.1
+version=0.2
 
 default: build
 
@@ -10,5 +10,5 @@ build:
 push:
 	docker push henne90gen/alpine-apache2-webdav:$(version)
 
-run:
+run: build
 	cd test; docker-compose up -d
