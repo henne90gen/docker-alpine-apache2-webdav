@@ -1,21 +1,14 @@
-apache2:
-  image: yvess/alpine-apache2-webdav:0.3
-  hostname: apache2
-  environment:
-    - APACHE_SERVER_NAME=localhost
-    - VSFTPD_PASV_ADDRESS=localhost
-    - CREATE_TESTUSER=YES
-    - SSL=YES
-    - SSL_KEY=/etc/auth/localhost_vsftpd.key
-    - SSL_CERT=/etc/auth/localhost_vsftpd.cert
-
-  volumes:
-    #- /local_path_to_key/ssl.key:/path_to_key.key
-    #- /local_path_to_cert/ssl.crt:/path_to_cert.crt
-    - ..:/usr/local/src_webdav
-    - ./auth:/etc/auth
-  ports:
-    - "127.0.0.1:8080:80"
-    - "127.0.0.1:21:21"
-    - "127.0.0.1:21100-21110:21100-21110"
-    - "127.0.0.1:8443:443"
+version: '3'
+services:
+  apache2:
+    image: henne90gen/alpine-apache2-webdav:0.4
+    hostname: apache2
+    environment:
+      - APACHE_SERVER_NAME=localhost
+      - WWW_DATA_UID=1000
+      - WWW_DATA_GID=1000
+    volumes:
+      - ./auth/apache2:/etc/auth/apache2
+      - ./testuser:/var/www/testuser
+    ports:
+      - "8080:80"

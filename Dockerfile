@@ -6,16 +6,14 @@ RUN apk add --update \
         curl \
         bash \
         apache2-webdav \
-        apache2-ssl \
         apache2-ctl \
-        ca-certificates \
-        vsftpd \
+        apr-util \
+        apr-util-dbm_db \
         linux-pam \
         && \
     curl -Ls -o /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v1.21.7.0/s6-overlay-amd64.tar.gz \
     && tar xfz /tmp/s6-overlay.tar.gz -C / \
     && rm -f /tmp/s6-overlay.tar.gz \
-    && update-ca-certificates \
     && deluser xfs \
     && delgroup www-data \
     && apk add -U build-base \
@@ -34,5 +32,4 @@ RUN apk add --update \
     && rm -rfv /var/cache/apk/*
 ADD files.tar /
 ENTRYPOINT ["/init"]
-EXPOSE 80 443
-EXPOSE 21 21100-21110
+EXPOSE 80
