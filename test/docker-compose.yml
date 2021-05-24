@@ -4,7 +4,7 @@ services:
     image: henne90gen/alpine-apache2-webdav:0.2
     hostname: apache2
     environment:
-      - APACHE_SERVER_NAME=localhost
+      - APACHE2_SERVER_NAME=localhost
       - WWW_DATA_UID=1000
       - WWW_DATA_GID=1000
     volumes:
